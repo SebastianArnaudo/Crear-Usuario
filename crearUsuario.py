@@ -27,6 +27,9 @@ def guardar():
     limpiarFormulario()
 
 
+eBienvenida = tk.Label(text = "crea un usuario")
+eBienvenida.place(x=170, y =10)
+
 etiquetaUsuario = tk.Label(text= "Usuario:")
 etiquetaUsuario.place(x= 30, y= 50)
 
@@ -67,7 +70,7 @@ entradaContrasenia.place(x= 150, y= 300)
 
 
 boton = tk.Button(text= "Guardar", command= guardar, bg = "green")
-boton.place(x= 160, y= 350)
+boton.place(x= 170, y= 350)
 
 
 tk.mainloop()
