@@ -10,3 +10,9 @@ def guardarDatos(username,nombre,apellido,email,nacimiento,password):
     conet.commit()
 
 
+def ingresarUsuario(username,password):
+    cursor.execute("SELECT * FROM usuarios WHERE username= ? AND password=?", (username, password))
+    if cursor.fetchone() is not None:
+        return True
+    else:
+        return False
