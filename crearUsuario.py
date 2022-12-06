@@ -1,10 +1,16 @@
+
 import tkinter as tk
 from tkinter import Frame
 import baseDatos 
+from tkinter import messagebox
+from validarUsuario import validarClave,validarFecha,validarNombre
 
 ventana = tk.Tk()
 ventana.title("ADM Usuarios")
 ventana.geometry("450x450")
+
+
+
 
 def limpiarFormulario():
     entradaNombre.delete(0,tk.END)
@@ -16,6 +22,8 @@ def limpiarFormulario():
 
 
 def guardar():
+
+    
     username = entradaUsuario.get()
     nombre = entradaNombre.get()
     apellido = entradaApellido.get()
@@ -23,12 +31,19 @@ def guardar():
     correo = entradaCorreo.get()
     contrasenia = entradaContrasenia.get()
 
-    baseDatos.guardarDatos(username,nombre,apellido,correo,nacimiento,contrasenia)
+    nombreValido=validarNombre(username)
+    claveValida=validarClave(contrasenia)
+    fechaValida=validarFecha(nacimiento)
 
+    #if nombreValido and claveValida and fechaValida == True:
+
+    baseDatos.guardarDatos(username,nombre,apellido,correo,nacimiento,contrasenia)
+    messagebox.showinfo("Usuario Guardado","El usuario fue guardado con exito")
     limpiarFormulario()
 
-    etiquetaEstado ["text"] = "Usuario Guardado"
 
+
+    
 
 framePrincipal = Frame(ventana, bg="gray")
 framePrincipal.pack(expand=True,fill="both")
@@ -56,6 +71,8 @@ entradaApellido.place(x= 150, y= 150)
 
 etiquetaNacimiento = tk.Label(framePrincipal,text= "Fecha Nacimiento:",bg="gray")
 etiquetaNacimiento.place(x= 30, y= 200)
+eAclaracionFecha = tk.Label(framePrincipal, text= "* En formato\n DD/MM/AAA", bg="grey")
+eAclaracionFecha.place(x=300,y=200)
 
 entradaNacimiento = tk.Entry(framePrincipal)
 entradaNacimiento.place(x= 150, y= 200)
@@ -78,8 +95,6 @@ entradaContrasenia.place(x= 150, y= 300)
 boton = tk.Button(framePrincipal,text= "Guardar", command= guardar,bg = "green1")
 boton.place(x= 170, y= 350)
 
-etiquetaEstado = tk.Label(framePrincipal,text= "",bg="gray")
-etiquetaEstado.place(x= 170, y= 400)
 
 
 tk.mainloop()

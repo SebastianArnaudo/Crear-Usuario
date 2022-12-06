@@ -8,8 +8,8 @@ window.title("Iniciar Sesion")
 window.geometry("400x300")
 
 def login():
-    username=usuarioI.get()
-    password=claveI.get()
+    username=entradaUsuario.get()
+    password=entradaClave.get()
 
     if baseDatos.ingresarUsuario(username,password):
         messagebox.showinfo("Mensaje","Bienvenido a la plataforma")
@@ -18,27 +18,33 @@ def login():
     limpiarFormulario()
     
 def limpiarFormulario():
-    usuarioI.delete(0,tk.END)
-    claveI.delete(0,tk.END)
+    entradaUsuario.delete(0,tk.END)
+    entradaClave.delete(0,tk.END)
 
-etiquetaBienvenida = tk.Label(text = "Bienvenido\n Por favor", font= "arial")
-etiquetaBienvenida.pack()
+frameLogin = Frame(window,bg="orange2")
+frameLogin.pack(expand=True, fill="both")
 
-etiquetaUsuario = tk.Label (text = "Ingrese su usuario")
-etiquetaUsuario.pack()
+etiquetaBienvenida = tk.Label(frameLogin,text = "Bienvenido\n Por favor", font= "arial",bg="orange2")
+etiquetaBienvenida.place(x=150, y=5)
+
+etiquetaUsuario = tk.Label (frameLogin,text = "Ingrese su usuario",bg="orange2")
+etiquetaUsuario.place(x=30, y=100)
 
 
-usuarioI = tk.Entry()
-usuarioI.pack()
+entradaUsuario = tk.Entry(frameLogin)
+entradaUsuario.place(x=150, y=100)
 
-etiquetaClave = tk.Label(text = "Ingrese su contraseña")
-etiquetaClave.pack()
+etiquetaClave = tk.Label(frameLogin,text = "Ingrese su contraseña",bg="orange2")
+etiquetaClave.place(x=30, y=150)
 
-claveI = tk.Entry()
-claveI.pack()
+entradaClave = tk.Entry(frameLogin,show="*")
+entradaClave.place(x=150,y=150)
 
-bLogin = tk.Button(text= "Ingresar", command= login)
-bLogin.pack()
+botonLogin = tk.Button(frameLogin,text= "Ingresar", command= login,bg="green1")
+botonLogin.place(x=160,y=200)
+
+botnCrear = tk.Button(frameLogin,text= "Crear usuario",bg="green1")
+botnCrear.place(x=150, y=230)
 
 
 tk.mainloop()
