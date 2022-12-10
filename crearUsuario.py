@@ -3,13 +3,61 @@ import tkinter as tk
 from tkinter import Frame
 import baseDatos 
 from tkinter import messagebox
+from datetime import datetime
 from validarUsuario import validarClave,validarFecha,validarNombre
 
 ventana = tk.Tk()
 ventana.title("ADM Usuarios")
 ventana.geometry("450x450")
 
+def validarNombre(usuario):
+    if len(usuario) >= 4:
+        return True
+    else:
+        messagebox.showinfo("Aviso","El nombre de Usuario no bede tener menos de 4 caracteres")
 
+def validarClave(clave):
+    if len(clave) >= 5:
+        return True
+    else:
+        messagebox.showinfo("Aviso","La clave no debe tener menos de 5 caracteres")
+
+
+def calculoEdad(dia,mes,ano):
+    d=datetime.now()
+    anoActual=d.year
+    mesActual=d.month
+    diaActual=d.day
+    if mes==mesActual and dia>diaActual:
+        edad=anoActual-ano-1
+    elif mes>mesActual:
+        edad=anoActual-ano-1
+    else:
+        edad=anoActual-ano
+
+    return edad
+
+
+
+def validarFecha(nacimiento):
+  
+  string=nacimiento
+  lista=string.replace("-","/")
+  barras=lista.count("/")
+  
+  if barras==2:
+    lista=lista.split("/")
+    try:
+        edad=calculoEdad(int(lista[0]),int(lista[1]),int(lista[2]))
+    
+        if edad<0:
+            messagebox.showinfo("Aviso","Segun la fecha,sted aun no ha nacido")
+        else: 
+            return True
+    except:
+        messagebox.showinfo("Aviso","Formato de fecha incorrecto")
+  else:
+     messagebox.showinfo("Aviso","Formato de fecha incorrecto")
 
 
 def limpiarFormulario():
@@ -30,16 +78,15 @@ def guardar():
     nacimiento = entradaNacimiento.get()
     correo = entradaCorreo.get()
     contrasenia = entradaContrasenia.get()
+   
 
-    nombreValido=validarNombre(username)
-    claveValida=validarClave(contrasenia)
-    fechaValida=validarFecha(nacimiento)
+    if validarNombre(username) and validarClave(contrasenia) and validarFecha(nacimiento):
 
-    #if nombreValido and claveValida and fechaValida == True:
-
-    baseDatos.guardarDatos(username,nombre,apellido,correo,nacimiento,contrasenia)
-    messagebox.showinfo("Usuario Guardado","El usuario fue guardado con exito")
-    limpiarFormulario()
+        baseDatos.guardarDatos(username,nombre,apellido,correo,nacimiento,contrasenia)
+        messagebox.showinfo("Usuario Guardado","El usuario fue guardado con exito")
+        limpiarFormulario()
+    else:
+        messagebox.showinfo("Aviso","Error al guardar")
 
 
 
@@ -49,7 +96,7 @@ framePrincipal = Frame(ventana, bg="gray")
 framePrincipal.pack(expand=True,fill="both")
 
 eBienvenida = tk.Label(framePrincipal,text = "Por favor\n Cree un usuario", font= "arial",bg="gray")
-eBienvenida.place(x=170, y =5)
+eBienvenida.place(x=150, y =5)
 
 etiquetaUsuario = tk.Label(framePrincipal,text= "Usuario:",bg="gray")
 etiquetaUsuario.place(x= 30, y= 50)
