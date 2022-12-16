@@ -21,6 +21,8 @@ def validarNombre(usuario):
         messagebox.showinfo("Aviso","El nombre de Usuario no bede tener menos de 4 caracteres")
 
 def validarClave(clave):
+
+
     if len(clave) >= 5:
         return True
     else:

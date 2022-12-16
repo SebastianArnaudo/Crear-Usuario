@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Frame
 from tkinter import messagebox
 import baseDatos
+import base64
  
 window = tk.Tk()
 window.title("Iniciar Sesion")
@@ -10,6 +11,9 @@ window.geometry("400x300")
 def login():
     username=entradaUsuario.get()
     password=entradaClave.get()
+    password = password.encode("ascii")
+    password=base64.b64encode(password)
+
 
     if baseDatos.ingresarUsuario(username,password):
         messagebox.showinfo("Mensaje","Bienvenido a la plataforma")

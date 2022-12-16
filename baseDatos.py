@@ -17,9 +17,10 @@ def ingresarUsuario(username,password):
     else:
         return False
 
-def validarCorreo(email):
-    cursor.execute("SELECT * FROM usuarios WHERE email = ?", (email))
+def compararUsuario(email):
+    cursor.execute("SELECT * FROM usuarios WHERE email=?", (email))
+
     if cursor.fetchone() is not None:
         return True
-    else: 
+    else:
         return False

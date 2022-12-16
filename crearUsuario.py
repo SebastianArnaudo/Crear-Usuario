@@ -2,6 +2,7 @@ import tkinter as tk
 from validarUsuario import validarClave,validarFecha,validarNombre,validarEmail
 from tkinter import Frame
 import baseDatos 
+import base64
 from tkinter import messagebox
 
 
@@ -32,7 +33,9 @@ def guardar():
     nacimiento = entradaNacimiento.get()
     correo = entradaCorreo.get()
     contrasenia = entradaContrasenia.get()
-   
+    
+    contrasenia = contrasenia.encode("ascii")
+    contrasenia=base64.b64encode(contrasenia)
 
     if validarEmail(correo) and validarNombre(username) and validarClave(contrasenia) and validarFecha(nacimiento):
 
@@ -41,7 +44,6 @@ def guardar():
         limpiarFormulario()
     else:
         messagebox.showinfo("Aviso","El usuario no pudo ser guardado")
-
 
 
     
