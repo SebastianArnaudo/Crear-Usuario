@@ -9,6 +9,18 @@ window.title("Iniciar Sesion")
 window.geometry("400x300")
 
 def login():
+
+    def bienvenido():
+        pagina = tk.Toplevel()
+        pagina.title("Bienvenido")
+        pagina.geometry("400x300")
+
+        framePagina= Frame(pagina,bg="yellow")
+        framePagina.pack(expand=True, fill="both")
+
+        etiquetaIngresar = tk.Label(pagina, text="Bienvenido a la plataforma", font="arial",bg="yellow", fg=  "red")
+        etiquetaIngresar.place(x=100, y=150)
+
     username=entradaUsuario.get()
     password=entradaClave.get()
     password = password.encode("ascii")
@@ -16,7 +28,7 @@ def login():
 
 
     if baseDatos.ingresarUsuario(username,password):
-        messagebox.showinfo("Mensaje","Bienvenido a la plataforma")
+        bienvenido()
     else:
         messagebox.showinfo("Mensaje","Usuario o contraseña incorrectos")
     limpiarFormulario()
@@ -47,8 +59,6 @@ entradaClave.place(x=150,y=150)
 botonLogin = tk.Button(frameLogin,text= "Ingresar", command= login,bg="green1")
 botonLogin.place(x=160,y=200)
 
-botnCrear = tk.Button(frameLogin,text= "Crear usuario",bg="green1")
-botnCrear.place(x=150, y=230)
 
 
 tk.mainloop()
